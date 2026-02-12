@@ -7,27 +7,32 @@ class UserService {
   }
 
   async list() {
-    const users = await httpClient.get("/users");
+    const token = localStorage.getItem("token");
+    const users = await httpClient.get("/users", { headers: { Authorization: `Bearer ${token}` } });
     return users;
   }
 
   async get(id) {
-    const user = await httpClient.get(`/users/${id}`);
+    const token = localStorage.getItem("token");
+    const user = await httpClient.get(`/users/${id}`, { headers: { Authorization: `Bearer ${token}` } });
     return user;
   }
 
   async create(data) {
-    const user = await httpClient.post("/users", data);
+    const token = localStorage.getItem("token");
+    const user = await httpClient.post("/users", data, { headers: { Authorization: `Bearer ${token}` } });
     return user;
   }
 
   async delete(id) {
-    const user = await httpClient.delete(`/users/${id}`);
+    const token = localStorage.getItem("token");
+    const user = await httpClient.delete(`/users/${id}`, { headers: { Authorization: `Bearer ${token}` } });
     return user;
   }
 
   async update(id, data) {
-    const user = await httpClient.put(`/users/${id}`, data);
+    const token = localStorage.getItem("token");
+    const user = await httpClient.put(`/users/${id}`, data, { headers: { Authorization: `Bearer ${token}` } });
     return user;
   }
 }

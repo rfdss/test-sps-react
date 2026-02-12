@@ -1,10 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import { useEffect, useState } from "react";
 import UserService from "../services/UserService";
-import { Layout, Table, Row, Col, Menu, Breadcrumb, theme, Typography, Button, Modal, Form, Input, Select } from "antd";
+import { Layout, Table, Row, Col, Menu, Breadcrumb, theme, Typography, Button, Modal, Form, Input, Select, Popconfirm, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { menuItems } from "../utils/menu";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const { Header, Footer, Content } = Layout;
 
@@ -21,12 +21,33 @@ function Users() {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const renderActions = (record) => {
+    return (
+      <Row gutter={24}>
+        <Col>
+          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)}>Edit</Button>
+        </Col>
+        <Col>
+          <Popconfirm
+            title="Delete the user"
+            description="Are you sure to delete this user?"
+            onConfirm={() => handleDelete(record.id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button icon={<DeleteOutlined />} danger>Delete</Button>
+          </Popconfirm>
+        </Col>
+      </Row>
+    )
+  }
+
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Email', dataIndex: 'email', key: 'email' },
     { title: 'Type', dataIndex: 'type', key: 'type' },
-    { title: 'Actions', dataIndex: 'actions', key: 'actions', render: (text, record) => <Button onClick={() => handleEdit(record)}>Edit</Button> },
+    { title: 'Actions', dataIndex: 'actions', key: 'actions', render: (text, record) => renderActions(record) },
   ];
 
   const handleEdit = (user) => {
@@ -57,7 +78,31 @@ function Users() {
       fetchUsers();
       handleCancel();
     } catch (error) {
-      setError(error.response.data.message);
+      notification.error({
+        message: 'Error',
+        description: error.response.data.message,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      setLoading(true);
+      const userService = new UserService();
+      await userService.delete(id);
+      if (user?.id === id) {
+        handleLogout();
+        return;
+      }
+
+      fetchUsers();
+    } catch (error) {
+      notification.error({
+        message: 'Error',
+        description: error.response.data.message,
+      });
     } finally {
       setLoading(false);
     }
@@ -123,7 +168,7 @@ function Users() {
         />
         <Row justify={'end'}>
           <Col span={24}>
-            <Button type="primary" onClick={() => setIsModalUserOpen(true)}>
+            <Button type="primary" style={{ marginBottom: '10px' }} onClick={() => setIsModalUserOpen(true)}>
               Add User
             </Button>
           </Col>
@@ -141,7 +186,7 @@ function Users() {
               {loading ? (
                 <div>Carregando...</div>
               ) : error ? (
-                <div>Erro ao carregar usuários</div>
+                <div>{error}</div>
               ) : (
                 <Table dataSource={users} columns={columns} />
               )}
