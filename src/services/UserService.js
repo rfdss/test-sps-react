@@ -1,21 +1,34 @@
-import axios from "axios";
+import httpClient from "../utils/http-client";
 
 class UserService {
+  async login(data) {
+    const user = await httpClient.post("/login", data);
+    return user;
+  }
+
   async list() {
-    const users = await axios.get(`${process.env.REACT_APP_SERVER_URL}/users`);
+    const users = await httpClient.get("/users");
     return users;
   }
+
   async get(id) {
-    throw new Error("Not implemented");
+    const user = await httpClient.get(`/users/${id}`);
+    return user;
   }
+
   async create(data) {
-    throw new Error("Not implemented");
+    const user = await httpClient.post("/users", data);
+    return user;
   }
+
   async delete(id) {
-    throw new Error("Not implemented");
+    const user = await httpClient.delete(`/users/${id}`);
+    return user;
   }
+
   async update(id, data) {
-    throw new Error("Not implemented");
+    const user = await httpClient.put(`/users/${id}`, data);
+    return user;
   }
 }
 

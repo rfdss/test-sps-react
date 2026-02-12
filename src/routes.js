@@ -1,23 +1,29 @@
 import { createBrowserRouter } from "react-router-dom";
-
-import Home from "./pages/Home";
 import Users from "./pages/Users";
-import UserEdit, { userLoader } from "./pages/UserEdit";
+import Login from "./pages/Login";
+import CheckAuthRoute from "./components/CheckAuthRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />,
+    element: <CheckAuthRoute />,
+    children: [
+      {
+        path: "/login",
+        element: <Login />,
+      },
+    ],
   },
   {
-    path: "/users",
-    element: <Users />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: "/",
+        element: <Users />,
+      },
+    ],
   },
-  {
-    path: "/users/:userId",
-    element: <UserEdit />,
-    loader: userLoader,
-  },
+
 ]);
 
 export default router;

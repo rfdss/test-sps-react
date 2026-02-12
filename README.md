@@ -1,30 +1,52 @@
-----------------------------------
-ESPANHOL
-----------------------------------
+# SPS Group Test - Frontend
 
-## PRUEBA SPS REACT
+CRUD de usuarios com autenticação JWT
 
-- Crear un CRUD de usuarios
+### 📋 Pré-requisitos
 
-## Reglas
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+* [Git](https://git-scm.com)
+* [Node.js](https://nodejs.org/en/) (ou a linguagem/runtime principal do projeto)
+* Um editor para trabalhar no código como [VSCode](https://code.visualstudio.com/)
 
-- Crear la página de inicio de sesión (signIn) para autenticar al usuario (usar el usuario previamente registrado para validar).
-- Se puede utilizar cualquier tipo de almacenamiento para guardar el token.
-- Solo será posible registrar y/o visualizar usuarios si el usuario está autenticado.
-- Consumir la API creada anteriormente (test-sps-server).
+### 🔧 Instalação
 
+1. Clone este repositório:
+```bash
+git clone https://github.com/rfdss/test-sps-react.git
+```
 
-----------------------------------
-PORTUGUÊS
-----------------------------------
+2. Acesse a pasta do projeto no terminal/cmd:
+```bash
+cd test-sps-react
+```
 
-# SPS REACT TEST
+3. Instale as dependências:
+```bash
+npm install
+```
 
-- Criar um CRUD de usuários
+## 📦 Execução
 
-# Regras
+Para rodar a aplicação em modo de desenvolvimento:
 
-- Criar a página de signIn para fazer a autenticação do usuário (Usar o usuário previamente cadastrado para validar)
-- Pode usar qualquer tipo de storage para guardar o token
-- Só será possível cadastrar e/ou visualizar os usuários se estiver autenticado
-- Chamar a API que foi criada anteriormente (test-sps-server)
+```bash
+npm run dev
+# ou
+npm start
+```
+
+A aplicação será iniciada na porta `3000` - acesse [http://localhost:3000](http://localhost:3000)
+
+## 🛠️ Construído com
+
+* [React](https://reactjs.org/) - O framework web utilizado
+* [Node.js](https://nodejs.org/) - Ambiente de execução
+* [Antd](https://ant.design/) - Framework de UI
+
+## ✒️ Autores
+
+* **Rafael Silva** - *Desenvolvimento* - [rfdss](https://github.com/rfdss)
+
+---
+⌨️ com ❤️ por [Rafael Silva] 😊
